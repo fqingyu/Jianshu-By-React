@@ -1,22 +1,32 @@
 import React, { Component } from "react";
+import { connect } from 'react-redux'
 import { TopicWrapper, TopicItem } from '../style'
+
 
 class Topic extends Component {
     render() {
         return (
             <TopicWrapper>
-                <TopicItem>
-                    <img
-                        alt="pic"
-                        className='topic-pic'
-                        src='//upload.jianshu.io/collections/images/261938/man-hands-reading-boy-large.jpg?imageMogr2/auto-orient/strip|imageView2/1/w/64/h/64'
-                    />
-                    社会热点
-                </TopicItem>
-                
+                {
+                    this.props.topicList.map((item) => (
+                            <TopicItem key={item.get('id')}>
+                                <img
+                                    alt="pic"
+                                    className='topic-pic'
+                                    src={item.get('imgUrl')}
+                                />
+                                {item.get('title')}
+                            </TopicItem>
+                        )
+                    )
+                }
             </TopicWrapper>
         )
     }
 }
 
-export default Topic;
+const mapStateToProps = (state) => ({
+    topicList: state.getIn(['home', 'topicList'])
+});
+
+export default connect(mapStateToProps, null)(Topic);

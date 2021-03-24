@@ -6,6 +6,7 @@ import { GlobalFontStyle } from "./statics/iconfont/iconfont";
 
 ReactDOM.render(
     <Fragment>
+        <meta name="referrer" content="no-referrer" />
         <GlobalFontStyle />
         <GlobalStyle />
         <App />

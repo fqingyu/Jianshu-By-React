@@ -1,4 +1,4 @@
-import * as constants from "./constants";
+import { constants } from "../store";
 import { fromJS } from "immutable";
 import axios from "axios";
 
