@@ -1,9 +1,9 @@
-import React, { Component } from "react";
+import React, { PureComponent } from "react";
 import { QRItem } from '../style'
 import { connect } from 'react-redux'
 import {actionCreators} from "../store";
 
-class QRCode extends Component {
+class QRCode extends PureComponent {
     getLargeQR = () => {
         const { focused } = this.props;
         if (focused) {

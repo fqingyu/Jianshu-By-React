@@ -1,13 +1,23 @@
-import React, { Component } from "react";
-import { HomeWrapper, HomeLeft, HomeRight } from "./style"
+import React, { PureComponent } from "react";
+import { HomeWrapper, HomeLeft, HomeRight, BackTop } from "./style"
 import Topic from "./components/Topic";
 import List from "./components/List";
 import Recommendation from "./components/Recommendation";
 import QRCode from "./components/QRCode";
 import Writer from "./components/Writer";
+import { connect } from 'react-redux';
+import { actionCreators } from './store'
 
-class Home extends Component {
+class Home extends PureComponent {
+
+    // shouldComponentUpdate
+
+    handleScrollTop() {
+        window.scrollTo(0, 0);
+    }
+
     render() {
+        const { showScroll } = this.props;
         return (
             <HomeWrapper>
                 <HomeLeft>
@@ -20,9 +30,41 @@ class Home extends Component {
                     <QRCode />
                     <Writer />
                 </HomeRight>
+                { showScroll ? <BackTop onClick={this.handleScrollTop}>顶部</BackTop> : null}
             </HomeWrapper>
         )
     }
+
+    componentDidMount() {
+        this.bindEvents();
+    }
+
+    componentWillUnmount() {
+        const { changeScrollTopShow } = this.props;
+        window.removeEventListener('scroll', changeScrollTopShow)
+    }
+
+    bindEvents() {
+        const { changeScrollTopShow } = this.props;
+        window.addEventListener('scroll', changeScrollTopShow)
+    }
 }
 
-export default Home;
+const mapStateToProps = (state) => ({
+    showScroll: state.getIn(['home', 'showScroll'])
+})
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        changeScrollTopShow() {
+            if (document.documentElement.scrollTop > 100) {
+                dispatch(actionCreators.toggleTopShow(true))
+            }
+            else {
+                dispatch(actionCreators.toggleTopShow(false))
+            }
+        }
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home);

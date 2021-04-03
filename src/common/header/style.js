@@ -4,7 +4,8 @@ import logoPic from '../../statics/logo.png'
 export const HeaderWrapper = styled.div`
   height: 56px;
   border-bottom: 1px solid #f0f0f0;
-`
+  z-index: 1;
+`;
 
 export const HeaderCenter = styled.div`
   min-width: 768px;
@@ -14,7 +15,7 @@ export const HeaderCenter = styled.div`
   position: relative;
 `
 
-export const Logo = styled.a`
+export const Logo = styled.div`
   position: absolute;
   top: 0;
   left: 0;
